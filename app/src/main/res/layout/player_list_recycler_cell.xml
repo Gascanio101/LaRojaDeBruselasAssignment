@@ -11,8 +11,10 @@
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/imageView_playerList_picture"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,8 +22,10 @@
         app:civ_border_color="#FF000000"/>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView_homeName"
         style="@style/primaryTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:gravity="start"
         app:layout_constraintBottom_toBottomOf="@+id/imageView_playerList_picture"
         app:layout_constraintEnd_toEndOf="parent"
