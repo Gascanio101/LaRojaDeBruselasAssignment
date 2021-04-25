@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">La Roja De Bruselas</string>
+    <string name="goalsScored">Goals:</string>
+    <string name="activePlayer">Active</string>
+    <string name="home_title">Home</string>
+    <string name="inactivePlayer">Inactive</string>
 </resources>

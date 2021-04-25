@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LaRojaDeBruselas">
+        <activity android:name=".UI.PlayerProfileActivity"></activity>
         <activity android:name=".UI.HomeActvity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
