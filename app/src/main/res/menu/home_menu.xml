@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/home_search"
+        android:icon="@drawable/ic_search"
+        android:title="Search"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/home_reorder"
+        android:icon="@drawable/ic_reorder"
+        android:title="Reorder"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/home_filterActive"
+        android:icon="@drawable/ic_filter"
+        android:title="Filter Active"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/home_filterPosition"
+        android:icon="@drawable/ic_filter"
+        android:title="Filter Position"
+        app:showAsAction="never" />
 </menu>

@@ -3,6 +3,8 @@ package com.lrdb.larojadebruselas.UI
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lrdb.larojadebruselas.Model.Player
@@ -21,14 +23,20 @@ class HomeActvity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+
+        getPlayerList(0)
+        Log.d("gabiii!", " Outside Coroutine")
+    }
+
+    fun getPlayerList(case: Int) {
         // Asynchronous process using coroutines
         CoroutineScope(Dispatchers.IO).launch {
 
             Log.d("gabiii!", "Inside Coroutine 1")
             // Here we store the data received in a generic type "response"
             val response = LaRojaService
-                .getLaRojaDataService()
-                .getLaRojaPlayers()
+                    .getLaRojaDataService()
+                    .getLaRojaPlayers()
 
             // Return to UI thread to process the data and inflate the recyclerView with it
             withContext(Dispatchers.Main) {
@@ -53,18 +61,50 @@ class HomeActvity : AppCompatActivity() {
                         val seasonsActive = temp[index].seasonsActive
 
                         tempList.add(Player(active, bio, gamesPlayed, goalsScored, name,
-                            number, playerPictureUrl, position, profilePictureUrl, seasonsActive))
+                                number, playerPictureUrl, position, profilePictureUrl, seasonsActive))
 
                         index += 1
                     }
 
-                    recyclerView_home.layoutManager = LinearLayoutManager(this@HomeActvity)
-                    recyclerView_home.adapter = HomePlayerAdapter(tempList)
+                    when (case) {
+                        0 -> {
+                            Log.d("gabo", "Case 0 = $case")
+                            Log.d("gabo", "$tempList")
+                            recyclerView_home.layoutManager = LinearLayoutManager(this@HomeActvity)
+                            recyclerView_home.adapter = HomePlayerAdapter(tempList)
+                        }
+                        1 -> {
+                            Log.d("gabo", "Case 1 = $case")
+                            Log.d("gabo", "$tempList")
+                            val filteredList = tempList.filter { it.active == false }
+                            recyclerView_home.layoutManager = LinearLayoutManager(this@HomeActvity)
+                            recyclerView_home.adapter = HomePlayerAdapter(filteredList)
+                        }
+                        // TODO : add cases for toolbar buttons
+
+                    }
+
                 }
             }
         }
+    }
 
-        Log.d("gabiii!", " Outside Coroutine")
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.home_menu, menu)
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        var activeToggle = false
+        when (item.itemId) {
+            R.id.home_filterActive -> {
+                getPlayerList(1)
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     fun showHide(view: View) {
