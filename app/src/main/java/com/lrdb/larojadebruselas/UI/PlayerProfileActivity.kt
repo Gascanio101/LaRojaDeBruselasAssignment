@@ -25,8 +25,14 @@ class PlayerProfileActivity : AppCompatActivity() {
         intent.getExtra("seasonsActive", playerList[position].seasonsActive)*/
 
 
+        val bio = intent.getStringExtra("bio").toString()
+        profile_textView_bio.text = bio
+
+        val gamesPlayed = intent.getStringExtra("gamesPlayed").toString()
+        profile_textView_gamesPlayed.text = "Games played:" + gamesPlayed
+
         val profileName = intent.getStringExtra("name").toString()
-        profileTextView_name.text = profileName
+        profileTextView_name.text = "Name:" + profileName
 
         val profileNumber = intent.getIntExtra("number", 0)
         profile_textView_number.text = profileNumber.toString()

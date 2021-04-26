@@ -19,24 +19,31 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class HomeActvity : AppCompatActivity() {
+    lateinit var listOfPlayers:List<Player>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        listOfPlayers= mutableListOf()
 
 
-        getPlayerList(0)
+
+
+        listOfPlayers = getPlayerList()
+        Log.d("gabo", "--------------------------------- $listOfPlayers")
+
 
     }
 
-    fun getPlayerList(case: Int) {
+    fun getPlayerList():MutableList<Player> {
         // Asynchronous process using coroutines
+        var listPlayer = mutableListOf<Player>()
         CoroutineScope(Dispatchers.IO).launch {
 
             Log.d("gabiii!", "Inside Coroutine 1")
             // Here we store the data received in a generic type "response"
             val response = LaRojaService
-                    .getLaRojaDataService()
-                    .getLaRojaPlayers()
+                .getLaRojaDataService()
+                .getLaRojaPlayers()
 
             // Return to UI thread to process the data and inflate the recyclerView with it
             withContext(Dispatchers.Main) {
@@ -60,13 +67,26 @@ class HomeActvity : AppCompatActivity() {
                         val profilePictureUrl = it.profilePictureUrl
                         val seasonsActive = it.seasonsActive
 
-                        tempList.add(Player(active, bio, gamesPlayed, goalsScored, name,
-                                number, playerPictureUrl, position, profilePictureUrl, seasonsActive))
-
+                        tempList.add(
+                            Player(
+                                active, bio, gamesPlayed, goalsScored, name,
+                                number, playerPictureUrl, position, profilePictureUrl, seasonsActive
+                            )
+                        )
                         index += 1
                     }
 
-                    when (case) {
+                    Log.d("gabo", "-------- $tempList")
+                    listPlayer = tempList
+
+                    recyclerView_home.layoutManager = LinearLayoutManager(this@HomeActvity)
+                    recyclerView_home.adapter = HomePlayerAdapter(listPlayer)
+                }
+            }
+        }
+        return listPlayer
+    }
+                   /* when (case) {
                         0 -> {
                             recyclerView_home.layoutManager = LinearLayoutManager(this@HomeActvity)
                             recyclerView_home.adapter = HomePlayerAdapter(tempList)
@@ -85,12 +105,11 @@ class HomeActvity : AppCompatActivity() {
                         }
 
                     }
-
                 }
             }
         }
         return 
-    }
+    }*/
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.home_menu, menu)
@@ -100,16 +119,11 @@ class HomeActvity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        var activeToggle = false
+        /*var activeToggle = false
         when (item.itemId) {
             R.id.home_filterActive -> {
-                if (activeToggle == false) {
-                    getPlayerList(1)
-                    activeToggle = true
-                }
-
             }
-        }
+        }*/
 
         return super.onOptionsItemSelected(item)
     }

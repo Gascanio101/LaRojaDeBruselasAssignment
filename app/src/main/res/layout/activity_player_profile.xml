@@ -58,6 +58,18 @@
                 android:id="@+id/profile_textView_bio"
                 style="@style/primary_profile_text" />
 
+            <TextView
+                android:id="@+id/profile_textView_gamesPlayed"
+                style="@style/primary_profile_text" />
+
+            <TextView
+                android:id="@+id/profile_textView_goalsScored"
+                style="@style/primary_profile_text" />
+
+            <TextView
+                android:id="@+id/profile_textView_seasonsActive"
+                style="@style/primary_profile_text" />
+
         </LinearLayout>
     </ScrollView>
 
