@@ -25,7 +25,7 @@ class HomeActvity : AppCompatActivity() {
 
 
         getPlayerList(0)
-        Log.d("gabiii!", " Outside Coroutine")
+
     }
 
     fun getPlayerList(case: Int) {
@@ -49,16 +49,16 @@ class HomeActvity : AppCompatActivity() {
 
                     var index = 0
                     temp?.forEach {
-                        val active = temp[index].active
-                        val bio = temp[index].bio
-                        val gamesPlayed = temp[index].gamesPlayed
-                        val goalsScored = temp[index].goalsScored
-                        val name = temp[index].name
-                        val number = temp[index].number
-                        val playerPictureUrl = temp[index].playerPictureUrl
-                        val position = temp[index].position
-                        val profilePictureUrl = temp[index].profilePictureUrl
-                        val seasonsActive = temp[index].seasonsActive
+                        val active = it.active
+                        val bio = it.bio
+                        val gamesPlayed = it.gamesPlayed
+                        val goalsScored = it.goalsScored
+                        val name = it.name
+                        val number = it.number
+                        val playerPictureUrl = it.playerPictureUrl
+                        val position = it.position
+                        val profilePictureUrl = it.profilePictureUrl
+                        val seasonsActive = it.seasonsActive
 
                         tempList.add(Player(active, bio, gamesPlayed, goalsScored, name,
                                 number, playerPictureUrl, position, profilePictureUrl, seasonsActive))
@@ -68,8 +68,6 @@ class HomeActvity : AppCompatActivity() {
 
                     when (case) {
                         0 -> {
-                            Log.d("gabo", "Case 0 = $case")
-                            Log.d("gabo", "$tempList")
                             recyclerView_home.layoutManager = LinearLayoutManager(this@HomeActvity)
                             recyclerView_home.adapter = HomePlayerAdapter(tempList)
                         }
@@ -80,13 +78,18 @@ class HomeActvity : AppCompatActivity() {
                             recyclerView_home.layoutManager = LinearLayoutManager(this@HomeActvity)
                             recyclerView_home.adapter = HomePlayerAdapter(filteredList)
                         }
-                        // TODO : add cases for toolbar buttons
+                        2 -> {
+                            val filteredList = tempList.filter { it.active == true }
+                            recyclerView_home.layoutManager = LinearLayoutManager(this@HomeActvity)
+                            recyclerView_home.adapter = HomePlayerAdapter(filteredList)
+                        }
 
                     }
 
                 }
             }
         }
+        return 
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -100,7 +103,11 @@ class HomeActvity : AppCompatActivity() {
         var activeToggle = false
         when (item.itemId) {
             R.id.home_filterActive -> {
-                getPlayerList(1)
+                if (activeToggle == false) {
+                    getPlayerList(1)
+                    activeToggle = true
+                }
+
             }
         }
 
