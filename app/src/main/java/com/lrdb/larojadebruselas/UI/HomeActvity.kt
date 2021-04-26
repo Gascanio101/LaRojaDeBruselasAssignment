@@ -24,6 +24,7 @@ class HomeActvity : AppCompatActivity() {
         // Asynchronous process using coroutines
         CoroutineScope(Dispatchers.IO).launch {
 
+            Log.d("gabiii!", "Inside Coroutine 1")
             // Here we store the data received in a generic type "response"
             val response = LaRojaService
                 .getLaRojaDataService()
@@ -32,8 +33,9 @@ class HomeActvity : AppCompatActivity() {
             // Return to UI thread to process the data and inflate the recyclerView with it
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
+                    Log.d("gabiii!", "Inside Coroutine 2")
                     val temp = response.body()
-                    Log.d("gabriel", "I did it")
+                    // Log.d("gabriel", "I did it")
 
                     val tempList = mutableListOf<Player>()
 
@@ -62,7 +64,7 @@ class HomeActvity : AppCompatActivity() {
             }
         }
 
-        
+        Log.d("gabiii!", " Outside Coroutine")
     }
 
     fun showHide(view: View) {
