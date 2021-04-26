@@ -13,26 +13,26 @@ class PlayerProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player_profile)
 
+        val name = intent.getStringExtra("name").toString()
+        profileTextView_name.text = "Name: " + name
 
-        /*intent.getBooleanExtra("active")
-        intent.getExtra("bio", playerList[position].bio)
-        intent.getExtra("gamesPlayed", playerList[position].gamesPlayed)
-        intent.getExtra("goalsScored", playerList[position].goalsScored)
+        val bio = intent.getStringExtra("bio").toString()
+        profile_textView_bio.text = bio
 
-        intent.getExtra("playerPictureUrl", playerList[position].playerPictureUrl)
-        intent.getExtra("position", playerList[position].position)
-        intent.getExtra("profilePictureUrl", playerList[position].profilePictureUrl)
-        intent.getExtra("seasonsActive", playerList[position].seasonsActive)*/
+        val gamesPlayed = intent.getIntExtra("gamesPlayed", 0)
+        profile_textView_gamesPlayed.text = "Games Played: " + gamesPlayed.toString()
 
+        val goalsScored = intent.getIntExtra("goalsScored", 0)
+        profile_textView_goalsScored.text = "Goals scored: " + goalsScored.toString()
 
-        val profileName = intent.getStringExtra("name").toString()
-        profileTextView_name.text = profileName
+        val seasonsActive = intent.getIntExtra("seasonsActive", 0)
+        profile_textView_seasonsActive.text = "Seasons Active: " + seasonsActive.toString()
 
         val profileNumber = intent.getIntExtra("number", 0)
-        profile_textView_number.text = profileNumber.toString()
+        profile_textView_number.text = "Player number: " + profileNumber.toString()
 
         val profilePosition = intent.getStringExtra("position").toString()
-        profile_textView_position.text = profilePosition
+        profile_textView_position.text = "Position: " + profilePosition
 
         val profileActive = intent.getBooleanExtra("active", true)
         when (profileActive) {

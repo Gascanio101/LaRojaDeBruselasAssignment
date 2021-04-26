@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/yellow_background_200"
+    android:background="@color/white"
     tools:context=".UI.PlayerProfileActivity">
 
     <ImageView
         android:id="@+id/imageView_profilePicture"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
         android:layout_gravity="end"
         android:layout_margin="16dp"
         android:layout_marginTop="16dp"
@@ -43,16 +43,28 @@
                 style="@style/primary_profile_text" />
 
             <TextView
-                android:id="@+id/profile_textView_number"
-                style="@style/primary_profile_text"/>
+                android:id="@+id/profile_textView_position"
+                style="@style/primary_profile_text" />
 
             <TextView
-                android:id="@+id/profile_textView_position"
+                android:id="@+id/profile_textView_number"
                 style="@style/primary_profile_text"/>
 
             <TextView
                 android:id="@+id/profile_textView_active"
                 style="@style/primary_profile_text"/>
+
+            <TextView
+                android:id="@+id/profile_textView_seasonsActive"
+                style="@style/primary_profile_text" />
+
+            <TextView
+                android:id="@+id/profile_textView_goalsScored"
+                style="@style/primary_profile_text" />
+
+            <TextView
+                android:id="@+id/profile_textView_gamesPlayed"
+                style="@style/primary_profile_text" />
 
             <TextView
                 android:id="@+id/profile_textView_bio"

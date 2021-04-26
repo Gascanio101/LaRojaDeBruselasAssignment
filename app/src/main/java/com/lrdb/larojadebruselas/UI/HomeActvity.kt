@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lrdb.larojadebruselas.Model.Player
 import com.lrdb.larojadebruselas.Networking.LaRojaService
@@ -22,13 +24,8 @@ class HomeActvity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        val mutableLiveList= MutableLiveData<MutableList<Player>>()
 
-
-        getPlayerList(0)
-
-    }
-
-    fun getPlayerList(case: Int) {
         // Asynchronous process using coroutines
         CoroutineScope(Dispatchers.IO).launch {
 
@@ -41,10 +38,7 @@ class HomeActvity : AppCompatActivity() {
             // Return to UI thread to process the data and inflate the recyclerView with it
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
-                    Log.d("gabiii!", "Inside Coroutine 2")
                     val temp = response.body()
-                    // Log.d("gabriel", "I did it")
-
                     val tempList = mutableListOf<Player>()
 
                     var index = 0
@@ -65,60 +59,30 @@ class HomeActvity : AppCompatActivity() {
 
                         index += 1
                     }
-
-                    when (case) {
-                        0 -> {
-                            recyclerView_home.layoutManager = LinearLayoutManager(this@HomeActvity)
-                            recyclerView_home.adapter = HomePlayerAdapter(tempList)
-                        }
-                        1 -> {
-                            Log.d("gabo", "Case 1 = $case")
-                            Log.d("gabo", "$tempList")
-                            val filteredList = tempList.filter { it.active == false }
-                            recyclerView_home.layoutManager = LinearLayoutManager(this@HomeActvity)
-                            recyclerView_home.adapter = HomePlayerAdapter(filteredList)
-                        }
-                        2 -> {
-                            val filteredList = tempList.filter { it.active == true }
-                            recyclerView_home.layoutManager = LinearLayoutManager(this@HomeActvity)
-                            recyclerView_home.adapter = HomePlayerAdapter(filteredList)
-                        }
-
-                    }
-
+                    mutableLiveList.value = tempList
                 }
             }
         }
-        return 
+
+        mutableLiveList.observe(
+                this,Observer{
+            recyclerView_home.layoutManager = LinearLayoutManager(this@HomeActvity)
+            recyclerView_home.adapter = HomePlayerAdapter(it)
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.home_menu, menu)
-
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        var activeToggle = false
+        // TODO: Implement onClickListeners for the menu's options.
         when (item.itemId) {
-            R.id.home_filterActive -> {
-                if (activeToggle == false) {
-                    getPlayerList(1)
-                    activeToggle = true
-                }
-
-            }
+            R.id.home_filterActive -> {}
         }
 
         return super.onOptionsItemSelected(item)
-    }
-
-    fun showHide(view: View) {
-        view.visibility = if (view.visibility == View.VISIBLE){
-            View.GONE
-        } else{
-            View.VISIBLE
-        }
     }
 }
